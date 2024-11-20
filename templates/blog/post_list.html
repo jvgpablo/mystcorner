@@ -1,0 +1,40 @@
+{% extends '../base.html' %}
+
+{% block posts_block %}
+    {% load static %}
+    <div class="search-bar-container">
+        <form class="search-bar-form" method="POST" action="">
+            {% csrf_token %}
+            <input class="search-bar-input" type="text" placeholder="Search by tags" name="search" id="">
+            <button class="search-bar-button" type="submit">
+                <img src="{% static 'svg/icons/search_icon.svg' %}" alt="">
+            </button>
+        </form>
+    </div>
+    <div class="post-list-container">
+        this is the content
+        <div class="post-list">
+            {% for post in posts %}
+                <div class="post-container">
+                    <div class="post-title-row">
+                        <h2 class="post-title">{{ post.title }}</h2>
+                        <div class="post-date">Posted at {{ post.date_added }}</div>
+                    </div>
+                    <div class="post-description-row">
+                        <div class="post-description">{{ post.intro }}</div>
+                        
+                    </div>   
+                    {% if post.image %}
+                        <div class="post-image-row">
+                            <figure class="post-image">
+                                <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                            </figure>
+                        </div>                     
+                    {% endif %}
+                    <div class="read-more-row">
+                        <a class="read-more" href="{% url 'post_detail' post.slug %}">Read more</a>    
+                    </div>  
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}

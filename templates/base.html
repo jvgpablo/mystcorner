@@ -1,24 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code with stein</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/posts.css' %}">
 </head>
 <body>
-    <nav class="navbar is-info">
-        <div class="navbar-brand">
-                <a href="/" class="navbar-item"><strong>Code with stein</strong></a>
-        </div>
-    </nav>
-    <section class="section">
-        <div class="container">
-            {% block content %}
-            {% endblock %}
-        </div> 
+    <div class="main-container">
+        <!--Este contenido es estatico, aparecera en todas las paginas-->
+        <section class="sidebar">
+            <div class="sidebar-title">
+                sidebar title
+            </div>
+            <!-- Este boton deberia cargar post_list.html -->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="">Posts</a>
+            </div>
+            <!-- Este boton deberia cargar gallery/gallery.html -->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="">Gallery</a>
+            </div>
+            <!-- Este boton deberia cargar about_me/about_me.html-->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="">About me</a>
+            </div>
+            <!-- Este boton deberia cargar contact/contact.html -->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="">Contact me!</a>
+            </div>
+            <!-- Este boton deberia devolverte al principio de la pagina -->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="">top!</a>
+            </div>
 
-    </section>
+        
+        </section>
+        <!--Aqui va todo el contenido de la pagina especifica, posts, galeria, etc-->    
+        <section class="content">
+            {% block posts_block %}
+            {% endblock %}
+        </section>
+    </div>
 </body>
 </html>

@@ -5,7 +5,7 @@ from .models import Post
 def frontpage(request):
     posts =Post.objects.all()
 
-    return render(request,'blog/frontpage.html',{'posts': posts})
+    return render(request,'blog/post_list.html',{'posts': posts})
 
 
 def post_detail(request, slug):
