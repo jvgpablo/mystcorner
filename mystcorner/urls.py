@@ -18,12 +18,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from blog.views import frontpage, post_detail
+from blog import views
 
 urlpatterns = [
-    path('',frontpage, name='frontpage'),
+    path('',views.frontpage, name='frontpage'),
     path('admin/', admin.site.urls),
-    path('<slug:slug>/', post_detail, name='post_detail'),
+    path('posts/', views.post_list, name='post_list'),
+    path('posts/<slug:slug>/', views.post_detail, name='post_detail'),
+    path('posts/search', views.search_post, name='post_search' ),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

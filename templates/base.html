@@ -16,9 +16,9 @@
             <div class="sidebar-title">
                 sidebar title
             </div>
-            <!-- Este boton deberia cargar post_list.html -->
+            <!-- Este boton deberia cargar 'post_list' -->
             <div class="sidebar-button">
-                <a class="sidebar-link" href="">Posts</a>
+                <a class="sidebar-link" href="{% url 'post_list' %}">Posts</a>
             </div>
             <!-- Este boton deberia cargar gallery/gallery.html -->
             <div class="sidebar-button">
@@ -41,7 +41,7 @@
         </section>
         <!--Aqui va todo el contenido de la pagina especifica, posts, galeria, etc-->    
         <section class="content">
-            {% block posts_block %}
+            {% block content %}
             {% endblock %}
         </section>
     </div>

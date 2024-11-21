@@ -1,16 +1,7 @@
-{% extends '../base.html' %}
+{% extends 'blog/post_block.html' %}
 
-{% block posts_block %}
+{% block post_list %}
     {% load static %}
-    <div class="search-bar-container">
-        <form class="search-bar-form" method="POST" action="">
-            {% csrf_token %}
-            <input class="search-bar-input" type="text" placeholder="Search by tags" name="search" id="">
-            <button class="search-bar-button" type="submit">
-                <img src="{% static 'svg/icons/search_icon.svg' %}" alt="">
-            </button>
-        </form>
-    </div>
     <div class="post-list-container">
         this is the content
         <div class="post-list">
