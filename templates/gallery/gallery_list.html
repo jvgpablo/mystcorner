@@ -1,0 +1,20 @@
+{% extends 'gallery/gallery_block.html' %}
+
+{% block gallery_list %}
+    <div class="gallery-list-container">
+        this is the gallery
+        <div class="gallery-list">
+            {% for post in posts %}
+                {% if post.images.all %}
+                    {% for image in post.images.all %}
+                    <div class="gallery-list-item">
+                        <div class="gallery-list-img">
+                            <img src="{{ image.image.url }}" alt="">
+                        </div>           
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>  
+    </div>
+{% endblock %}

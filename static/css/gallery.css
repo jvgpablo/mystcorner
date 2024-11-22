@@ -1,0 +1,64 @@
+.gallery-container{
+    background-color: lightgreen;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sorting-container{
+    width: 70%;
+    display: flex;
+}
+
+.sorting-form{
+    width: 100%;
+    display: flex;
+}
+
+.select-container{
+    width: 100%;
+    display: flex;
+    flex: 20;
+}
+
+.select-container select{
+    width: 100%;
+}
+
+.sorting-button{
+    height: 40px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* the css for the gallery */
+
+.gallery-list-container{
+    background-color: lightseagreen;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+}
+
+.gallery-list{
+    width: 80%;
+    background-color: rgba(76, 175, 80, 0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery-list-image{
+    height: 300px;
+}
+
+.gallery-list-image img{
+    object-fit: cover;
+}

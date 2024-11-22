@@ -29,3 +29,8 @@ def search_post(request):
                        })
     else:
         return render(request, 'blog/post_search.html',{})
+    
+#gallery code
+def gallery_list(request):
+    posts=Post.objects.all()
+    return render(request,'gallery/gallery_list.html',{"posts" : posts} )

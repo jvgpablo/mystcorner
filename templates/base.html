@@ -7,6 +7,7 @@
     <title>Code with stein</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/gallery.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/posts.css' %}">
 </head>
 <body>
@@ -22,7 +23,7 @@
             </div>
             <!-- Este boton deberia cargar gallery/gallery.html -->
             <div class="sidebar-button">
-                <a class="sidebar-link" href="">Gallery</a>
+                <a class="sidebar-link" href="{% url 'gallery-list' %}">Gallery</a>
             </div>
             <!-- Este boton deberia cargar about_me/about_me.html-->
             <div class="sidebar-button">
