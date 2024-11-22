@@ -45,20 +45,37 @@
 .gallery-list{
     width: 80%;
     background-color: rgba(76, 175, 80, 0.3);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+.gallery-list-item{
+    width: 100%;
     display: flex;
-    flex-direction: column;
 }
 
-.gallery-item{
+.gallery-list-img{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
-.gallery-list-image{
-    height: 300px;
-}
-
-.gallery-list-image img{
+.gallery-list-img img{
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+}
+
+@media only screen and (max-width: 900px) {
+    .gallery-list{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .gallery-list{
+        grid-template-columns: 1fr 1fr;
+    }
 }

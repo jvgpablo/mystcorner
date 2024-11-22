@@ -8,15 +8,17 @@ def frontpage(request):
     return render(request,'frontpage/frontpage.html',{'posts': posts})
 
 
-def post_detail(request, slug):
+def post_detail(request, slug, origin):
     post= Post.objects.get(slug=slug)
 
     return render(request, 'blog/post_detail.html' , {'post' : post})   
 
 def post_list(request):
     posts =Post.objects.all()
-
-    return render(request,'blog/post_list.html',{'posts': posts})
+    origin_dir = 'blog/post.html'
+    return render(request,'blog/post_list.html',{
+        'posts': posts,
+        'dir_origin': origin_dir})
 
 def search_post(request):
     if request.method == "POST":

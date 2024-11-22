@@ -24,7 +24,7 @@ urlpatterns = [
     path('',views.frontpage, name='frontpage'),
     path('admin/', admin.site.urls),
     path('posts/', views.post_list, name='post_list'),
-    path('posts/<slug:slug>/', views.post_detail, name='post_detail'),
+    path('post/<slug:slug>/', views.post_detail, name='post_detail'),
     path('posts/search', views.search_post, name='post_search' ),
     path('gallery/', views.gallery_list, name='gallery-list'),
 ]
