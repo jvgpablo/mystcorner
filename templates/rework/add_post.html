@@ -3,9 +3,13 @@
 {% block content %}
     <h1>add post</h1>
     <hr>
+    {% if user.is_authenticated %}
     <form method="POST" class="form-group">
         {% csrf_token %}
         {{form.as_p}}
         <button class="btn btn_secondary">Create post</button>
     </form>
+    {% else %}
+        <p>You're not supposed to be here.</p>
+    {% endif %}
 {% endblock%}
