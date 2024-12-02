@@ -17,16 +17,19 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from blog import views
 
 urlpatterns = [
-    path('',views.frontpage, name='frontpage'),
     path('admin/', admin.site.urls),
-    path('posts/', views.post_list, name='post_list'),
-    path('post/<slug:slug>/', views.post_detail, name='post_detail'),
-    path('posts/search', views.search_post, name='post_search' ),
-    path('gallery/', views.gallery_list, name='gallery-list'),
+    path('', include('blog.urls')),
+    path('members/', include('django.contrib.auth.urls')),
+    path('members/', include('members.urls')),
+    #path('',views.frontpage, name='frontpage'),
+    #path('posts/', views.post_list, name='post_list'),
+    #path('post/<slug:slug>/', views.post_detail, name='post_detail'),
+    #path('posts/search', views.search_post, name='post_search' ),
+    #path('gallery/', views.gallery_list, name='gallery-list'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
