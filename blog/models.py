@@ -14,9 +14,15 @@ class Post(models.Model):
     #class Meta:
     #    ordering = ['-date_added']
 
+    def __str__(self):
+        return self.title
+
     def get_absolute_url(self):
         return reverse('post_detail', args=(str(self.id)))
 
 class PostImage(models.Model):
     post = models.ForeignKey(Post, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/')
+
+    def __str__(self):
+        return self.post.title
