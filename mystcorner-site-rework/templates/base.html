@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code with stein</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/gallery.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/posts.css' %}">
+</head>
+<body>
+    <div class="main-container">
+        <!--Este contenido es estatico, aparecera en todas las paginas-->
+        <section class="sidebar">
+            <div class="sidebar-title">
+                sidebar title
+            </div>
+            <!-- Este boton deberia cargar 'post_list' -->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="{% url 'post_list' %}">Posts</a>
+            </div>
+            <!-- Este boton deberia cargar gallery/gallery.html -->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="{% url 'gallery-list' %}">Gallery</a>
+            </div>
+            <!-- Este boton deberia cargar about_me/about_me.html-->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="">About me</a>
+            </div>
+            <!-- Este boton deberia cargar contact/contact.html -->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="">Contact me!</a>
+            </div>
+            <!-- Este boton deberia devolverte al principio de la pagina -->
+            <div class="sidebar-button">
+                <a class="sidebar-link" href="">top!</a>
+            </div>
+
+        
+        </section>
+        <!--Aqui va todo el contenido de la pagina especifica, posts, galeria, etc-->    
+        <section class="content">
+            {% block content %}
+            {% endblock %}
+        </section>
+    </div>
+</body>
+</html>

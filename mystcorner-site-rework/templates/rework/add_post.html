@@ -1,0 +1,43 @@
+{% extends 'rework/base_rework.html' %}
+
+{% block content %}
+    <div class="container mt-4 p-4 bg-light border rounded">
+        <h1 class="text-primary text-center">Add Post</h1>
+        <hr>
+        {% if user.is_authenticated %}
+            <form method="post" enctype="multipart/form-data" class="form-group">
+                {% csrf_token %}
+
+                <h3 class="text-secondary">Post Form</h3>
+                <div class="mb-3">
+                    {{ form.as_p }}
+                </div>
+
+                <h3 class="text-secondary">Images</h3>
+                {{ formset.management_form }}
+                <table class="table table-bordered table-hover">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th>Image</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for form in formset %}
+                            <tr>
+                                <td class="text-center">{{ form.image }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                </div>
+            </form>
+        {% else %}
+            <div class="alert alert-danger text-center mt-3">
+                <p>You are not authorized to be here.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
