@@ -2,6 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+class PostCategory(models.Model):
+    name = models.CharField(max_length=255)
+    def __str__(self):
+        return self.name
+
 class Post(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField()
@@ -10,6 +15,7 @@ class Post(models.Model):
     #image = models.ImageField(upload_to='images/', null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.CharField(max_length=255, default='Uncategorized')
     
     #class Meta:
     #    ordering = ['-date_added']
@@ -26,3 +32,4 @@ class PostImage(models.Model):
 
     def __str__(self):
         return self.post.title
+    

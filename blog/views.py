@@ -2,6 +2,7 @@ from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import  reverse_lazy, reverse
+from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, PostImage
 from .forms import PostForm, PostImageForm, EditPostForm, PostImageFormset
@@ -44,25 +45,25 @@ class AddPostInline():
             image.post = self.object
             image.save()
 
-class CreatePost(AddPostInline,CreateView):
+class CreatePost(AddPostInline, CreateView):
+
     def get_context_data(self, **kwargs):
-        context = super(CreatePost, self).get_context_data(**kwargs)
-        context['named_formsets'] = self.get_named_formsets()
-        return context
+        ctx = super(CreatePost
+    , self).get_context_data(**kwargs)
+        ctx['named_formsets'] = self.get_named_formsets()
+        return ctx
 
     def get_named_formsets(self):
         if self.request.method == "GET":
             return {
-                'images' : PostImageFormset(prefix='images'),
+                #'variants': VariantFormSet(prefix='variants'),
+                'images': PostImageFormset(prefix='images'),
             }
         else:
             return {
-                'images' : PostImageFormset(
-                                            self.request.POST or None, 
-                                            self.request.FILES or None,
-                                            prefix='images'
-                                            ),
-            } 
+                #'variants': VariantFormSet(self.request.POST or None, self.request.FILES or None, prefix='variants'),
+                'images': PostImageFormset(self.request.POST or None, self.request.FILES or None, prefix='images'),
+            }
 
 class UpdatePostView(UpdateView):
     model = Post
@@ -74,6 +75,23 @@ class DeletePostView(DeleteView):
     model= Post
     template_name = 'rework/delete_post.html'
     success_url = reverse_lazy('home')
+
+
+#Eliminar IMAGENES DESDE EL FORM
+def delete_image(request, pk):
+    try:
+        image = PostImage.objects.get(id=pk)
+    except PostImage.DoesNotExist:
+        messages.success(
+            request, 'Object Does not exit'
+            )
+        return redirect('products:update_product', pk=image.product.id)
+
+    image.delete()
+    messages.success(
+            request, 'Image deleted successfully'
+            )
+    return redirect('products:update_product', pk=image.product.id)
 
 #def frontpage(request):
 #    posts =Post.objects.all()
