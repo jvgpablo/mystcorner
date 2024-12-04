@@ -1,14 +1,14 @@
 {% extends 'rework/base_rework.html'%}
 
 {% block content %}
-    <h1>Update Post</h1>
+    <h1>Add and/or edit about me</h1>
     <hr>
     <div class="container mt-4 p-4 bg-light rounded shadow-sm">
         {% if user.is_authenticated %}
         <form method="POST" class="form-group">
             {% csrf_token %}
             {{form.as_p}}
-            <button class="btn btn_secondary">Update post</button>
+            <button class="btn btn_primary" type="submit">Submit</button>
         </form>
         {% else %}
             <p>You're not supposed to be here.</p>

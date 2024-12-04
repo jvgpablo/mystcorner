@@ -3,21 +3,32 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import  reverse_lazy, reverse
 from django.contrib import messages
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, PostImage
-from .forms import PostForm, PostImageForm, EditPostForm, PostImageFormset
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
+from .models import Post, PostImage, PostCategory, AboutMe
+from .forms import PostForm, PostImageForm, EditPostForm, AboutMeForm, PostImageFormset
 
 #Class based views
 
 class BaseView(ListView):
     model = Post
     template_name = 'rework/post_list.html'
+    context_object_name = 'posts'
     
 class PostDetailView(DetailView):
     model= Post
     template_name = 'rework/post_detail.html'
+    context_object_name = 'post'
 
+class GalleryView(ListView):
+    model = Post
+    template_name = 'rework/gallery.html'
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet
+        context["category_list"] = PostCategory.objects.all()
+        return context
 
 class AddPostInline():
     model = Post
@@ -76,22 +87,70 @@ class DeletePostView(DeleteView):
     template_name = 'rework/delete_post.html'
     success_url = reverse_lazy('home')
 
+class AboutMeView(TemplateView):
+    template_name = 'rework/about_me.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["about_me"] = AboutMe.objects.all()
+        return context
+
+
+class CreateAboutMeView(CreateView):
+    model= AboutMe
+    form_class = AboutMeForm
+    template_name = 'rework/add_and_edit_about_me.html'
+    context_object_name = 'about_me'
+
+class UpdateAboutMeView(UpdateView):
+    model= AboutMe
+    form_class = AboutMeForm
+    template_name = 'rework/add_and_edit_about_me.html'
+    context_object_name = 'about_me'
+
+
+
+#Para que sepas podemos ocupar class based y function based, cualquiera te sea mas comodo
+def search_post(request):
+    if request.method == "POST":
+        searched = request.POST.get('searched')
+        posts = Post.objects.filter(title__contains= searched)
+        return render(request,
+                      'rework/post_list.html',
+                      {'posts' : posts})
+    else:
+        return render(request, 'rework/post_list.html',{})
+
+# ---------------------No se como ocupar esto todavia--------------------
+# class SearchPostView(ListView):
+#     queryset = Post.objects.all().order_by('date_added')
+#     template_name= 'rework/post_list.html'
+#     context_object_name = 'posts'
+
+#     def get_queryset(self, *args, **kwargs):
+#         qs = super().get_queryset(*args, **kwargs)
+#         query = self.request.GET.get('q')
+#         if query:
+#             return qs.filter(slug__contains=query)
+#         return qs
+
+
+#---------------------Cosas de antes del rework, etc----------------
 #Eliminar IMAGENES DESDE EL FORM
-def delete_image(request, pk):
-    try:
-        image = PostImage.objects.get(id=pk)
-    except PostImage.DoesNotExist:
-        messages.success(
-            request, 'Object Does not exit'
-            )
-        return redirect('products:update_product', pk=image.product.id)
+# def delete_image(request, pk):
+#     try:
+#         image = PostImage.objects.get(id=pk)
+#     except PostImage.DoesNotExist:
+#         messages.success(
+#             request, 'Object Does not exit'
+#             )
+#         return redirect('products:update_product', pk=image.product.id)
 
-    image.delete()
-    messages.success(
-            request, 'Image deleted successfully'
-            )
-    return redirect('products:update_product', pk=image.product.id)
+#     image.delete()
+#     messages.success(
+#             request, 'Image deleted successfully'
+#             )
+#     return redirect('products:update_product', pk=image.product.id)
 
 #def frontpage(request):
 #    posts =Post.objects.all()

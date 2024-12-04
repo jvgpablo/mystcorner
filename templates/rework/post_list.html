@@ -2,8 +2,14 @@
 
 {% block content %}
     <h1>Post list</h1>
+    <form method="POST" class="d-flex" role="search" action="{% url 'post_search' %}">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search" name="searched">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    <hr>
     <ul>
-        {% for post in object_list %}
+        {% for post in posts %}
         <li>
             <a href="{% url 'post_detail' post.pk %}">
                 {{ post.title }}
