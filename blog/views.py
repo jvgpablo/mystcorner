@@ -2,26 +2,22 @@ from django.forms import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import  reverse_lazy, reverse
-from django.contrib import messages
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Post, PostImage, PostCategory, AboutMe
 from .forms import PostForm, PostImageForm, EditPostForm, AboutMeForm, PostImageFormset
 
-#Class based views
-
+#-------------------------------------Base view----------------------------------
 class BaseView(ListView):
     model = Post
     template_name = 'rework/post_list.html'
     context_object_name = 'posts'
     
-class PostDetailView(DetailView):
-    model= Post
-    template_name = 'rework/post_detail.html'
-    context_object_name = 'post'
 
+#-------------------------------------Gallery code-----------------------------------
 class GalleryView(ListView):
     model = Post
     template_name = 'rework/gallery.html'
+    context_object_name = 'posts'
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -30,6 +26,8 @@ class GalleryView(ListView):
         context["category_list"] = PostCategory.objects.all()
         return context
 
+
+#-------------------------------------Posts code-----------------------------------
 class AddPostInline():
     model = Post
     form_class = PostForm
@@ -87,14 +85,30 @@ class DeletePostView(DeleteView):
     template_name = 'rework/delete_post.html'
     success_url = reverse_lazy('home')
 
+class PostDetailView(DetailView):
+    model= Post
+    template_name = 'rework/post_detail.html'
+    context_object_name = 'post'
+
+#Para que sepas podemos ocupar class based y function based, cualquiera te sea mas comodo
+def search_post(request):
+    if request.method == "POST":
+        searched = request.POST.get('searched')
+        posts = Post.objects.filter(title__contains= searched)
+        return render(request,
+                      'rework/post_list.html',
+                      {'posts' : posts})
+    else:
+        return render(request, 'rework/post_list.html',{})
+
+#-------------------------------------About me code-----------------------------------
 class AboutMeView(TemplateView):
     template_name = 'rework/about_me.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["about_me"] = AboutMe.objects.all()
+        context["about_me"] = AboutMe.objects.first()
         return context
-
 
 class CreateAboutMeView(CreateView):
     model= AboutMe
@@ -109,17 +123,12 @@ class UpdateAboutMeView(UpdateView):
     context_object_name = 'about_me'
 
 
+#-------------------------------------Login/Logout code-----------------------------------
 
-#Para que sepas podemos ocupar class based y function based, cualquiera te sea mas comodo
-def search_post(request):
-    if request.method == "POST":
-        searched = request.POST.get('searched')
-        posts = Post.objects.filter(title__contains= searched)
-        return render(request,
-                      'rework/post_list.html',
-                      {'posts' : posts})
-    else:
-        return render(request, 'rework/post_list.html',{})
+    
+
+
+
 
 # ---------------------No se como ocupar esto todavia--------------------
 # class SearchPostView(ListView):

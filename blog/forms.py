@@ -1,14 +1,14 @@
 from django import forms
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, ValidationError
 from .models import Post, PostImage, PostCategory, AboutMe
 
 choice_list = []
 
-if PostCategory.objects.all():
+try:
     choices = PostCategory.objects.all().values_list('name', 'name')
     for item in choices:
         choice_list.append(item)
-else:
+except:
     print('No categories found in PostCategory, defaulting to "uncategorized')
     choice_list.append(('uncategorized','uncategorized'))
     print('Categories list: ',choice_list)
@@ -67,3 +67,8 @@ class AboutMeForm(forms.ModelForm):
             'paragraph_body' : forms.Textarea(attrs={'class' : 'form-control' }),
             'paragraph_end' : forms.Textarea(attrs={'class' : 'form-control' })
         }
+
+    def clean(self):
+        if not self.instance.pk and AboutMe.objects.exists():
+            raise ValidationError('Solo se puede tener un objeto "about me"')
+        return super().clean()

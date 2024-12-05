@@ -2,18 +2,20 @@
 
 {% block content %}
     <h1>About me</h1>
-
+    <hr>
     <div class="container mt-4 p-4 bg-light rounded shadow-sm">
-        {% if user.is_authenticated %}
-        
-        {% endif %}
         {% if about_me %}
  
             <!--Los datos del about me los puedes en contrar en el models.py, llamalos como about_me.<nombre del field> -->
-            <p>Intenta añadir los datos del about me aqui</p>
+            <h2>{{about_me.title}}</h2>
+            <p>{{about_me.paragraph_intro}}</p>
+            <p>{{about_me.paragraph_body}}</p>
+            <p>{{about_me.paragraph_end}}</p>
         {% else %}
             {% if user.is_authenticated %}
-            <small>No about me found, <a href="{% url 'create_about_me' %}">create it?</a></small>
+            <small> <p style="display: inline; color: red;">No about me found.</p> <a href="{% url 'create_about_me' %}">Create about me page?</a></small>
+            {% else %}
+            <small> <p style="color : red">No about me found.</p> Please inform site operator about this issue.</small>
             {% endif %}
         {% endif %}
     </div>

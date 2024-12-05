@@ -8,25 +8,40 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     <hr>
-    <ul>
-        {% for post in posts %}
-        <li>
-            <a href="{% url 'post_detail' post.pk %}">
-                {{ post.title }}
-            </a>
-            -
-            {{ post.author.first_name }}
-            {{ post.author.last_name }}
-            -
-            {{ post.date_added }}
-            {% if user.is_authenticated %}
-            - 
-            <a href="{% url 'update_post' post.pk %}">(Edit)</a>
-            <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
-            {% endif %}
-            <br>
-            {{ post.body }}
-        </li>
-        {% endfor %}
-    </ul>
+    <div class="container mt-4 p-4 bg-light rounded shadow-sm">
+        {% if posts %}
+        <ul>
+            {% for post in posts %}
+            <li>
+                <a href="{% url 'post_detail' post.pk %}">
+                    {{ post.title }}
+                </a>
+                -
+                {{ post.author.first_name }}
+                {{ post.author.last_name }}
+                -
+                {{ post.date_added }}
+                {% if user.is_authenticated %}
+                - 
+                <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+                <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+                {% endif %}
+                <br>
+                {{ post.intro }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div class="d-flex justify-content-center">
+            <small>
+                <p style="color: red; text-align: center;">No posts were found</p>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_post' %}"><p style="text-align: center;">Create new post?</p></a>
+                {% else %}
+                    <p>Please inform site operator</p>
+                {% endif %}
+            </small>
+        </div>
+        {% endif %}
+    </div>
 {% endblock %}
