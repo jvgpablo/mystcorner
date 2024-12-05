@@ -4,11 +4,11 @@ from .models import Post, PostImage, PostCategory, AboutMe
 
 choice_list = []
 
-try:
+if PostCategory.objects.exists():
     choices = PostCategory.objects.all().values_list('name', 'name')
     for item in choices:
         choice_list.append(item)
-except:
+else:
     print('No categories found in PostCategory, defaulting to "uncategorized')
     choice_list.append(('uncategorized','uncategorized'))
     print('Categories list: ',choice_list)
@@ -72,3 +72,13 @@ class AboutMeForm(forms.ModelForm):
         if not self.instance.pk and AboutMe.objects.exists():
             raise ValidationError('Solo se puede tener un objeto "about me"')
         return super().clean()
+    
+class PostCategoryForm(forms.ModelForm):
+    class Meta:
+        model= PostCategory
+        fields = '__all__'
+        
+        widgets = {
+            'name' : forms.TextInput(attrs= {'class' : 'form-control'}),
+            'slug' : forms.TextInput(attrs = {'class' : 'form-control'})
+        }

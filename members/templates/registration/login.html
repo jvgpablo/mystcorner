@@ -1,22 +1,23 @@
 {% extends 'rework/base_rework.html'%}
 
 {% block content %}
+ 
     <div class="container mt-4 p-4 bg-light rounded shadow-sm">
         <h1>Login</h1>
-        <hr>
+         <hr>
         <form action="" method="POST">
             {% csrf_token %}
-            {% for field in form %}
             <div class="mb-3">
-                {{ field.label_tag }} 
-                {{ field }}
-                {% if field.errors %}
-                        <small>{{ field.errors|striptags }}</small> 
-                {% endif %}
-            </div>    	
-            {% endfor %}
+                <label for="usernameExample" class="form-label">Nombre de usuario</label>
+                <input type="text" class="form-control" id="usernameExample" name="username" placeholder="Nombre de usuario">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Ingrese contraseña">
+            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
 {%endblock content%}
 

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import  reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Post, PostImage, PostCategory, AboutMe
-from .forms import PostForm, PostImageForm, EditPostForm, AboutMeForm, PostImageFormset
+from .forms import PostForm, PostImageForm, EditPostForm, AboutMeForm, PostCategoryForm, PostImageFormset
 
 #-------------------------------------Base view----------------------------------
 class BaseView(ListView):
@@ -101,6 +101,13 @@ def search_post(request):
     else:
         return render(request, 'rework/post_list.html',{})
 
+#-------------------------------------Category code-----------------------------------
+
+class CreateCategoryView(CreateView):
+    model = PostCategory
+    form_class = PostCategoryForm
+    template_name = 'rework/create_category.html'
+
 #-------------------------------------About me code-----------------------------------
 class AboutMeView(TemplateView):
     template_name = 'rework/about_me.html'
@@ -124,6 +131,7 @@ class UpdateAboutMeView(UpdateView):
 
 
 #-------------------------------------Login/Logout code-----------------------------------
+
 
     
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.forms import UserCreationForm
+from .forms import UserLoginForm
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
@@ -15,6 +16,7 @@ class UserRegisterView(generic.CreateView):
 class UserLoginView(LoginView):
     template_name = 'rework/login.html'
     redirect_authenticated_user = True
+    authentication_form = UserLoginForm
     
     def get_success_url(self):
         return reverse_lazy('') 
